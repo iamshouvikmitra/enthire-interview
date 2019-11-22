@@ -1,28 +1,52 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-container class="bv-example-row" fluid>
+      <b-row>
+        <EventDetails :slotData="slotInfo" @slotReset="reset" />
+        <RegisterForm @slotData="updateSlotInfo" :hasSlotData="hasSlotData"/>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EventDetails from "./components/EventDetails.vue";
+import RegisterForm from "./components/RegisterForm.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
-  }
-}
+    EventDetails,
+    RegisterForm,
+  },
+  data() {
+    return {
+      slotInfo : undefined,
+      hasSlotData : false,
+    }
+  },
+  methods: {
+    updateSlotInfo(data){
+      this.slotInfo = -1;
+      this.hasSlotData = true;
+      this.$nextTick(() => {
+        this.slotInfo = data;
+    })
+    },
+    reset(){
+      this.hasSlotData = false;
+    }
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #647586;
+  margin-top: 30px;
+  margin-left: 20px;
 }
 </style>
